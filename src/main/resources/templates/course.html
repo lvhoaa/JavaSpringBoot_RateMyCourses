@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:block="title"> Rate My Courses </title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+  </head>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Montserrat", sans-serif;
+      color: rgb(0, 0, 139);
+    }
+
+    nav {
+      background-color: rgb(0, 0, 139);
+      overflow: hidden;
+      height: 60px; /* Adjust the height as needed */
+    }
+
+    #left-side,
+    #right-side {
+      float: left;
+      color: white;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      padding: 0 25px;
+      height: 100%;
+      font-family: "Montserrat", sans-serif; /* Montserrat as the font */
+      font-size: 18px; /* Adjust the font size as needed */
+      font-weight: bold; /* Make the text bold */
+    }
+
+    #right-side {
+      float: right;
+    }
+
+    #left-side a,
+    #right-side a {
+      text-decoration: none; /* Remove underline */
+      color: inherit; /* Use the inherited color (white) */
+    }
+
+    #content {
+      margin-top: 50px; /* Adjust this margin to provide space for the navbar */
+    }
+
+    /* MAIN CONTENT FOR PAGE */
+    
+  </style>
+
+  <body>
+    <nav>
+      <div id="left-side">
+        <a href="/"> Rate My Courses </a>
+      </div>
+      <div id="right-side">
+        <a>Login </a>
+
+      </div>
+    </nav>
+    <div id="content" name="content">
+        <div style="text-align: center;">
+            <p style="font-weight: bold; font-size: 36px; margin-bottom: -18px;" th:text="${course.code}"></p>
+            <p style="color: #999; font-size: 24px;" th:text="${course.name}"></p>
+        </div>
+        
+        <div style="display: flex; justify-content: center; margin-left: 150px; margin-right: 150px; margin-top: 20px; font-size: 18px;">
+            <div style="width: 45%; margin-right: 9%;">
+                <h2>Course Details</h2>
+                <p><strong>Description:</strong> <span th:text="${course.description}"></span></p>
+                <p><strong>Credit:</strong> <span th:text="${course.credit}"></span></p>
+            </div>
+        
+            <div style="width: 45%;">
+                <h2>Rating Stats</h2>
+                <p><strong>Quality:</strong> <span th:text="${avg_stars}"></span> ★ </p>
+                <p><strong>Grade:</strong> <span th:text="${avg_grade}"></span> 📝 </p>
+                <p><strong>Difficulty:</strong> <span th:text="${avg_difficulty}"></span> ☹</p>
+            </div>
+        </div>
+        
+        <h2 style="font-size: 36px; font-weight: lighter; text-align: center; margin-top: 80px; margin-bottom: 50px"> Past Students' Reviews </h2>
+        
+        <div style="height: 400px; width: 60%; overflow-y: scroll; max-height: 400px; margin: 0 auto; display: flex; justify-content: center; flex-wrap: wrap; border-radius: 10px; border: 1px solid #ddd; padding: 10px; align-items: center;">
+            <div th:each="rating : ${ratings}" style="width: 100%; border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin: 10px;">
+                <p style="margin-bottom: 40px; display: flex; justify-content: space-between;">
+                    <span>
+                        <span th:if="${rating.anonymous}" style="color: purple"> <strong> Anonymous </strong> </span>
+                        <span th:unless="${rating.anonymous}" style="color: purple"> <strong th:text="${rating.author}"></strong> </span>
+                        <strong>Quality: </strong> <span th:text="${rating.stars}"></span> ★
+                        <strong>Grade:</strong> <span th:text="${rating.grade}"></span>
+                        <strong>Difficulty:</strong> <span th:text="${rating.difficulty}"></span> ☹
+                    </span>
+                    <span style="text-align: right;" th:text="${rating.date}"></span>
+                </p>
+                <p th:text="${rating.comment}"></p>
+            </div>
+        </div>
+
+        <h2 style="font-size: 36px; font-weight: lighter; text-align: center; margin-top: 80px; margin-bottom: 50px;">Leave a Review</h2>
+
+        <style>
+            .star-rating {
+            font-size: 24px;
+            }
+
+            .star {
+            cursor: pointer;
+            color: #ccc;
+            display: inline-block;
+            }
+
+            .star.filled {
+            color: gold;
+            }
+
+            .emoji-rating {
+            font-size: 24px;
+        }
+
+        .emoji {
+            cursor: pointer;
+            display: inline-block;
+            color: #ccc;
+            margin-right: 5px; /* Adjust spacing between emojis as needed */
+        }
+
+        .emoji.filled {
+            color: black; /* Adjust the color for filled emojis as needed */
+        }
+        </style>
+
+        <div style="display: flex; justify-content: center; margin-left: 150px; margin-right: 150px; margin-top: 20px; font-size: 18px; border-radius: 10px; border: 1px solid #ddd; padding: 10px; margin-bottom: 100px;">
+            <form method="post" th:action="@{/saveRating/{courseId}(courseId=${course.id})}" style="display: flex; justify-content: space-between; width: 80%; margin-top: 50px; ">
+        
+                <div style="width: 45%; margin-right: 5%;">
+                    
+                    <label for="stars"> <strong>Quality:</strong> </label>
+                    <input type="number" name="stars" id="stars" >
+                    <br><br>
+        
+                    <label for="grade"> <strong>Grade:</strong> </label>
+                    <input type="text" id="grade" name="grade" >
+                    <br><br>
+        
+                    <label for="difficulty"> <strong>Difficulty:</strong> </label>
+                    <input type="number" name="difficulty" id="difficulty">
+                    <br><br>
+      
+                </div>
+        
+                <div style="width: 45%; display: flex; flex-direction: column;">
+                    <label for="comment"> <strong>Comment:</strong> </label>
+                    <input id="comment" name="comment" rows="4" >
+                    <br><br>
+                    <button type="submit" style="align-self: flex-end; background-color: rgb(0, 0, 139); color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-bottom: 40px">Submit Rating</button>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+  </body>
+</html>
