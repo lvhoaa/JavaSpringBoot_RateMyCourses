@@ -39,7 +39,7 @@ Key features of RateMyCourses project includes:
 1. Clone the repository or download the source code.
    ```bash
    git clone https://github.com/lvhoaa/JavaSpringBoot_RateMyCourses.git
-2. Install Java Development Kit (JDK) on your machine and activate your code editor
+2. Install Java Development Kit (JDK) on your machine and activate your code editor (VS Code/ Eclipse)
 3. Build the project using Maven.
     ```bash
     mvn clean install
@@ -59,9 +59,9 @@ To run the RateMyCourses server, follow these steps:
 ## Configuration
 - The RateMyCourse project requires certain configurations to ensure proper functioning.
 
-1. Configuration: The project utilizes a database for storing user information, entities, and other data. By default, it is configured to use an embedded H2 database. If you prefer to use a different database, such as MySQL or PostgreSQL, you need to update the database settings in the application.properties file. Set the appropriate database URL, username, and password to establish the connection.
+1. Configuration: The project utilizes a database for storing user information, course, and rating entities. By default, it is configured to use a PostgreSQL database. If you prefer to use a different database, such as MySQL, you need to update the database settings in the application.properties file. Set the appropriate database URL, username, and password to establish the connection.
 
-2. Security Configuration: User authentication and authorization are crucial for your application. The project includes basic security configurations using Spring Security. You may need to modify the security settings based on your requirements. For example, you can customize the login page, configure access rules for different endpoints, or integrate additional security features such as OAuth2 authentication.
+2. Security Configuration: User authentication and authorization are crucial for your application. The project includes basic security configurations (signup and login) using Spring Security. You may need to modify the security settings based on your requirements. For example, you can customize the login page, configure access rules for different endpoints, or integrate additional security features such as OAuth2 authentication.
 
 - Ensure that you review and update the relevant configuration files (application.properties, application-dev.properties, etc.) based on your specific project requirements. It's essential to keep sensitive information like database credentials, API keys, or secret tokens in a secure and private location, away from version control.
 
